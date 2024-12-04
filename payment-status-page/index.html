@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Payment Success</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card p-10">
+            <div class="alert alert-success">
+                Your Payment has been successfully processed.
+            </div>
+            <p><strong>Order Id:</strong> <span id="order-id">Loading...</span></p>
+            <p><strong>Order Status:</strong> <span id="order-status">Loading...</span></p>
+        </div>
+    </div>
+
+    <!-- JavaScript to dynamically populate Order ID and Order Status -->
+    <script>
+        // Get query parameters from the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var orderId = urlParams.get('order_id');  // Get 'order_id' from the URL
+        var orderStatus = urlParams.get('order_status');  // Get 'order_status' from the URL
+
+        // Dynamically update the page content based on the query parameters
+        if (orderId && orderStatus) {
+            // Update the content of the HTML elements
+            document.getElementById('order-id').textContent = orderId;
+            document.getElementById('order-status').textContent = orderStatus;
+        } else {
+            // Handle case when no query parameters are found
+            document.getElementById('order-id').textContent = 'Not Available';
+            document.getElementById('order-status').textContent = 'Not Available';
+        }
+    </script>
+</body>
+</html>
