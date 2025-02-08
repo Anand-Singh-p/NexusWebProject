@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Previous head content remains the same until script section -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Propose Day 2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
-    
+
     <style>
-        /* Previous styles remain the same */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -61,16 +60,14 @@
 
         .carousel-item:nth-child(1) {
             background-image: url('https://raw.githubusercontent.com/Anand-Singh-p/NexusWebProject/main/WhatsApp%20Image%202025-02-08%20at%2018.51.43_8d7f832a.jpg');
-
-
         }
 
         .carousel-item:nth-child(2) {
-            background-image: url('/WhatsApp\ Image\ 2025-02-08\ at\ 19.17.56_7c58990e.jpg');
+            background-image: url('https://raw.githubusercontent.com/Anand-Singh-p/NexusWebProject/main/WhatsApp%20Image%202025-02-08%20at%2019.17.56_7c58990e.jpg');
         }
 
         .carousel-item:nth-child(3) {
-            background-image: url('/WhatsApp\ Image\ 2025-02-08\ at\ 19.19.42_a54ea0c8.jpg');
+            background-image: url('https://raw.githubusercontent.com/Anand-Singh-p/NexusWebProject/main/WhatsApp%20Image%202025-02-08%20at%2019.19.42_a54ea0c8.jpg');
         }
 
         .carousel-button {
@@ -182,7 +179,6 @@
             }
         }
 
-        /* Adding new animation for hearts */
         @keyframes floatHeart {
             0% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-20px) scale(1.1); }
@@ -198,6 +194,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <h1>❤️ Our Love Story: Propose Day 2025 ❤️</h1>
@@ -222,9 +219,9 @@
             <p>On this Propose Day, I want to make a promise to you. I promise to continue supporting you as you have always supported me. I promise to keep loving you, every single day, and cherish the bond we share.</p>
             <p>I love you, Priya. More than words can ever say.</p>
         </div>
-        
+
         <div class="heart">❤️</div>
-        
+
         <div class="button-container">
             <button onclick="celebrateResponse()">I Love You Too</button>
         </div>
@@ -235,14 +232,10 @@
         <div class="signature">Forever Yours</div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
     <script>
-        // Ensure confetti is loaded before defining celebration function
         window.onload = function() {
-            // Test if confetti is loaded
             if (typeof confetti === 'undefined') {
                 console.error('Confetti library not loaded properly');
-                // Fallback celebration if confetti fails
                 window.celebrateResponse = function() {
                     createFloatingHearts();
                     setTimeout(() => {
@@ -250,19 +243,13 @@
                     }, 500);
                 };
             } else {
-                // Define celebration function if confetti is available
                 window.celebrateResponse = function() {
-                    // Trigger confetti
                     confetti({
                         particleCount: 150,
                         spread: 180,
                         origin: { y: 0.6 }
                     });
-
-                    // Create floating hearts
                     createFloatingHearts();
-
-                    // Show love message
                     setTimeout(() => {
                         alert('Thank you for accepting my love, Priya! ❤️ You make my life complete!');
                     }, 500);
@@ -270,7 +257,6 @@
             }
         };
 
-        // Function to create multiple floating hearts
         function createFloatingHearts() {
             for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
@@ -279,7 +265,6 @@
             }
         }
 
-        // Function to create a single floating heart
         function createFloatingHeart() {
             const heart = document.createElement('div');
             heart.innerHTML = '❤️';
@@ -287,14 +272,11 @@
             heart.style.left = Math.random() * window.innerWidth + 'px';
             heart.style.top = window.innerHeight + 'px';
             document.body.appendChild(heart);
-            
-            // Remove heart after animation
             setTimeout(() => {
                 heart.remove();
             }, 2000);
         }
 
-        // Carousel functionality
         let currentSlide = 0;
         const totalSlides = document.querySelectorAll('.carousel-item').length;
 
@@ -310,7 +292,6 @@
 
         setInterval(autoSlide, 5000);
 
-        // Intersection Observer for scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -323,4 +304,5 @@
         observer.observe(document.querySelector('.proposal-text'));
     </script>
 </body>
+
 </html>
