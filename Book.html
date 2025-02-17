@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Memories & Moments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .memory-box {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            perspective: 1000px;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        .memory-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+
+        .memory-box:hover .memory-content {
+            transform: rotateY(180deg);
+        }
+
+        .memory-front, .memory-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .memory-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: floatHeart 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .special-message {
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s;
+            position: absolute;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .special-message.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: white;
+            animation: sparkle 1.5s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .button-3d {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .button-3d:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .popup-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .popup-message.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="memory-grid">
+            <!-- Memory Box 1 -->
+            <div class="memory-box" onclick="showSpecialMessage(this)">
+                <div class="memory-content">
+                    <div class="memory-front">
+                        <h2>Our First Meeting</h2>
+                        <p>Click to reveal a special memory ✨</p>
+                    </div>
+                    <div class="memory-back">
+                        <h3>The Day Everything Changed</h3>
+                        <p>When our paths crossed, I knew something magical was about to begin... 💫</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Box 2 -->
+            <div class="memory-box" onclick="showSpecialMessage(this)">
+                <div class="memory-content">
+                    <div class="memory-front">
+                        <h2>Beautiful Moments</h2>
+                        <p>Discover our journey ❤️</p>
+                    </div>
+                    <div class="memory-back">
+                        <h3>Every Second With You</h3>
+                        <p>Each moment we share becomes a precious memory to treasure forever... 🌟</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Box 3 -->
+            <div class="memory-box" onclick="showSpecialMessage(this)">
+                <div class="memory-content">
+                    <div class="memory-front">
+                        <h2>Special Feelings</h2>
+                        <p>Open to feel the magic ✨</p>
+                    </div>
+                    <div class="memory-back">
+                        <h3>My Heart's Message</h3>
+                        <p>Words can't express how special you are to me... 💝</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Box 4 -->
+            <div class="memory-box" onclick="showSpecialMessage(this)">
+                <div class="memory-content">
+                    <div class="memory-front">
+                        <h2>Future Dreams</h2>
+                        <p>Let's explore our future ⭐</p>
+                    </div>
+                    <div class="memory-back">
+                        <h3>Our Tomorrow</h3>
+                        <p>Dreaming of all the beautiful moments we'll create together... 🌈</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="button-3d" onclick="showMainMessage()">Click For A Special Surprise!</button>
+    </div>
+
+    <div class="floating-hearts"></div>
+    <div class="popup-message">
+        <h2>My Special Message For You</h2>
+        <p>Every moment with you feels like magic. You make my world brighter and more beautiful. Thank you for being you! ❤️</p>
+        <button class="button-3d" onclick="hidePopup()">Close</button>
+    </div>
+    
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.querySelector('.floating-hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Create sparkles around elements
+        function createSparkles(element) {
+            for(let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                element.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1500);
+            }
+        }
+
+        function showSpecialMessage(box) {
+            createSparkles(box);
+            const messages = [
+                "You make every day special! ✨",
+                "Your smile lights up my world! 🌟",
+                "You're amazing in every way! 💫",
+                "Together is my favorite place to be! 💖"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            const message = document.createElement('div');
+            message.className = 'special-message';
+            message.innerHTML = randomMessage;
+            box.appendChild(message);
+            
+            setTimeout(() => message.classList.add('show'), 100);
+            setTimeout(() => {
+                message.classList.remove('show');
+                setTimeout(() => message.remove(), 500);
+            }, 2000);
+        }
+
+        function showMainMessage() {
+            document.querySelector('.popup-message').classList.add('show');
+            createSparkles(document.querySelector('.popup-message'));
+        }
+
+        function hidePopup() {
+            document.querySelector('.popup-message').classList.remove('show');
+        }
+
+        // Add sparkles to buttons
+        document.querySelectorAll('.button-3d').forEach(button => {
+            button.addEventListener('mouseover', () => createSparkles(button));
+        });
+    </script>
+    <div class="heart-link" onclick="window.location.href='magical-surprise.html'">
+      ❤️ Special Message For You ❤️
+  </div>
+  
+</body>
+</html>

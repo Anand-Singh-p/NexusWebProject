@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Books by shobhit...</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            animation: gradientShift 10s infinite alternate;
+            cursor: url('https://cdn.custom-cursor.com/db/pointer/32/Infinity_Gauntlet_Pointer.png'), auto;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Container Styles */
+        .container {
+            text-align: center;
+            position: relative;
+            padding: 30px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Loading Text */
+        .loading-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6f61, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 15px 30px;
+            border-radius: 15px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #ff6f61, 0 0 20px #ff6f61, 0 0 30px #ff6f61; }
+            100% { text-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00; }
+        }
+
+        /* Subtext */
+        .subtext {
+            font-size: 1.2em;
+            margin-top: 10px;
+            opacity: 0.8;
+            color: #fff;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 250px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6f61, #ffcc00);
+            border-radius: 50px;
+            animation: load 3s ease-in-out forwards;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Heart Image */
+        .heart {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            animation: heartbeat 1.5s infinite ease-in-out;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Next Button */
+        .next-btn {
+            background: linear-gradient(135deg, #ff6f61, #ffcc00);
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(255, 111, 97, 0.5);
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .next-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.7);
+        }
+
+        /* Floating Hearts Background */
+        .floating-heart {
+            position: absolute;
+            top: -50px;
+            font-size: 2em;
+            color: #ff6f61;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Fade-Out Animation */
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading-text">Loading Book...</div>
+        <div class="subtext">Get ready for the cutest moment! 💖</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <img class="heart" src="https://static.vecteezy.com/system/resources/thumbnails/017/419/333/small/3d-illustration-of-a-shiny-heart-symbol-of-love-and-romance-png.png" alt="Heart">
+        <button class="next-btn">NEXT →</button>
+    </div>
+
+    <!-- Floating Hearts -->
+    <div class="floating-heart">❤️</div>
+    <div class="floating-heart" style="left: 20%; animation-duration: 8s;">💖</div>
+    <div class="floating-heart" style="left: 40%; animation-duration: 10s;">💘</div>
+    <div class="floating-heart" style="left: 60%; animation-duration: 12s;">💕</div>
+    <div class="floating-heart" style="left: 80%; animation-duration: 14s;">💞</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // Typing effect for loading text
+        const loadingText = document.querySelector('.loading-text');
+        const text = "Loading Book...";
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                loadingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeText, 100); // Adjust typing speed
+            }
+        }
+        typeText();
+
+        // Next button click event
+        document.querySelector('.next-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Play sound
+            const audio = new Audio('https://www.soundjay.com/button/button-3.mp3');
+            audio.play();
+
+            // Trigger confetti
+            confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.6 }
+            });
+
+            // Pulse the heart
+            const heart = document.querySelector('.heart');
+            heart.style.animation = 'heartbeat 0.5s infinite';
+
+            // Fade out the page
+            document.body.classList.add('fade-out');
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'book.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

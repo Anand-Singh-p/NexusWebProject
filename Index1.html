@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Week Special Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff0000, #8b0000); /* Deep red gradient */
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Large Rose Animation */
+        .rose {
+            position: absolute;
+            font-size: 10em;
+            animation: growRose 5s infinite;
+            opacity: 0.7;
+        }
+
+        .rose.left {
+            left: -1px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .rose.right {
+            right: -1px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes growRose {
+            0%, 100% { transform: translateY(-50%) scale(0.8); }
+            50% { transform: translateY(-50%) scale(1.2); }
+        }
+
+        /* Login Form Container */
+        #login-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            position: relative;
+            z-index: 10;
+            width: 350px;
+        }
+
+        /* Form Elements */
+        label {
+            font-size: 20px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 77, 121, 0.7);
+        }
+
+        button {
+            background: #ff4d79;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #ff2357;
+            transform: scale(1.05);
+        }
+
+        /* Heart Cutting Effect */
+        .heart-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .heart {
+            font-size: 5em;
+            color: white;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .heart-cut {
+            display: none; /* Toggle display using JS or remove this */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px; /* Width can be adjusted */
+            height: 200px; /* Adjust height to maintain the aspect ratio */
+            background: url('/kiddo.jpg') no-repeat center;
+            background-size: cover; /* Ensure the image covers the container */
+            background-position: center center; /* Center the image */
+            border-radius: 60%; /* Apply rounded corners to create the heart effect */
+            box-shadow: 0 0 20px rgba(255, 77, 121, 0.7);
+            z-index: 15;
+        }
+
+        /* Footer */
+        footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 400;
+            z-index: 10;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Large Roses -->
+    <div class="rose left">🌹</div>
+    <div class="rose right">🌹</div>
+
+    <!-- Login Form -->
+    <form id="login-form">
+        <label for="code">Enter you husband febrate Name :</label>
+        <input type="text" id="code" name="code" placeholder="Your Name">
+        <button id="submit-btn">Login</button>
+    </form>
+
+    <!-- Heart Cutting Effect -->
+    <div class="heart-container">
+        <div class="heart">❤️</div>
+        <div class="heart-cut"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>"I Love You Kiddo"</p>
+        <p>"You are my sunshine, my only sunshine."</p>
+        <p>"Forever and always, my love."</p>
+    </footer>
+    <div id="result"></div>
+    <script>
+        // Login Form Logic
+        const form = document.getElementById('login-form');
+        const codeInput = document.getElementById('code');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultDiv = document.getElementById('result');
+
+        const secretCode = 'Anand'; // Replace with your secret code
+        const nextPageUrl = 'main.html'; // Replace with the URL of the new page
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userInput = codeInput.value.trim();
+            if (userInput === secretCode) {
+                resultDiv.innerHTML = 'kiddo';
+                window.location.href = nextPageUrl; // Redirect to new page
+            } else {
+                resultDiv.innerHTML = 'Naa Tum meri baby nhi hoo kon hooo tum kaha hai meri Shobhit';
+            }
+        });
+
+        // Heart Cutting Effect Logic
+        const heart = document.querySelector('.heart');
+        const heartCut = document.querySelector('.heart-cut');
+        const loginForm = document.getElementById('login-form'); // Select the login form
+
+        heart.addEventListener('click', () => {
+            // Hide the heart and show the heart-cut image
+            heart.style.display = 'none';
+            heartCut.style.display = 'block';
+
+            // Hide the login form
+            loginForm.style.display = 'none';
+
+            // After 20 seconds, hide the heart-cut image and show the login form again
+            setTimeout(() => {
+                heartCut.style.display = 'none';
+                loginForm.style.display = 'block'; // Show the login form again
+            }, 1000); // 20000 milliseconds = 20 seconds
+        });
+    </script>
+</body>
+</html>
+
+

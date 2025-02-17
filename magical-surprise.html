@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Proposal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ff69b4, #ff1493, #8b008b, #4b0082);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="red" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z"/></svg>'), auto;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .magic-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .magic-button {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            transition: all 0.3s;
+        }
+
+        .magic-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+        }
+
+        .proposal-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 2.5em;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transition: all 0.5s;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .proposal-text.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Yes/No Section */
+        .response-container {
+            display: none;
+            position: fixed;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .response-container button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .yes-button {
+            background: green;
+            color: white;
+        }
+
+        .no-button {
+            background: red;
+            color: white;
+        }
+
+        .yes-button:hover {
+            background: darkgreen;
+        }
+
+        .no-button:hover {
+            background: darkred;
+        }
+
+        .thank-you {
+            display: none;
+            font-size: 2em;
+            color: white;
+            text-align: center;
+        }
+
+        /* Heart Animation */
+        .heart {
+            position: absolute;
+            bottom: -10vh;
+            animation: floatUp 5s linear infinite;
+            font-size: 2em;
+            color: #ff1493;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-110vh); opacity: 0; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff0;
+            animation: confetti 2s linear infinite;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="magic-container">
+        <button class="magic-button" onclick="startProposal()">✨ Click For Magic ✨</button>
+    </div>
+
+    <div class="proposal-text">
+        <div class="message"></div>
+    </div>
+
+    <!-- Yes/No Confirmation -->
+    <div class="response-container">
+        <p>Do you accept my proposal?</p>
+        <button class="yes-button" onclick="showThankYou()">Yes 💖</button>
+        <button class="no-button" onclick="showRejection()">No 💔</button>
+    </div>
+
+    <!-- Thank You Message -->
+    <div class="thank-you">Thank You! I Love You Forever! ❤️</div>
+
+    <!-- Rejection Message -->
+    <div class="thank-you" id="rejection-message">It's okay, I'll always cherish you! 😢</div>
+
+    <!-- Audio for Background Music -->
+    <audio id="background-music" loop>
+        <source src="/WhatsApp Audio 2025-02-16 at 12.26.39_5befaab9.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Correct speech synthesis object
+        const speech = window.speechSynthesis;
+
+        // Define the proposal messages
+        const messages = [
+            "Priya...",
+            "You are the most beautiful person I've ever met...",
+            "Every moment with you is magical...",
+            "I can't imagine my life without you...",
+            "Will you marry me?"
+        ];
+
+        function showMessage(text, index) {
+            const messageDiv = document.querySelector('.proposal-text .message');
+            messageDiv.textContent = text;
+            document.querySelector('.proposal-text').classList.add('show');
+
+            // Create speech utterance
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+            speech.speak(utterance);
+
+            utterance.onend = () => {
+                document.querySelector('.proposal-text').classList.remove('show');
+
+                if (index < messages.length - 1) {
+                    setTimeout(() => {
+                        showMessage(messages[index + 1], index + 1);
+                    }, 1000);
+                } else {
+                    // Show Yes/No buttons after the last message
+                    setTimeout(() => {
+                        document.querySelector('.response-container').style.display = 'block';
+                    }, 1000);
+                }
+            };
+        }
+
+        function startProposal() {
+            // Hide button
+            document.querySelector('.magic-button').style.display = 'none';
+
+            // Start message sequence
+            setTimeout(() => showMessage(messages[0], 0), 1000);
+
+            // Start heart animation
+            startHeartAnimation();
+
+            // Play background music
+            document.getElementById('background-music').play();
+        }
+
+        function startHeartAnimation() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+
+        function showThankYou() {
+            document.querySelector('.response-container').style.display = 'none';
+            document.querySelector('.thank-you').style.display = 'block';
+
+            // Start confetti animation
+            startConfetti();
+        }
+
+        function showRejection() {
+            document.querySelector('.response-container').style.display = 'none';
+            document.getElementById('rejection-message').style.display = 'block';
+        }
+
+        function startConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
